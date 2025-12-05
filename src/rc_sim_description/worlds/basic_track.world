@@ -1,0 +1,168 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+    <light type="directional" name="sun">
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>200</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.5 -1</direction>
+      <cast_shadows>true</cast_shadows>
+    </light>
+
+    <model name="ground_plane_local">
+      <static>true</static>
+      <pose>0 0 -0.025 0 0 0</pose>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <box>
+              <size>60 60 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="ground_visual">
+          <geometry>
+            <box>
+              <size>60 60 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.45 0.35 1</ambient>
+            <diffuse>0.4 0.5 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <physics name="default_physics" type="ode">
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000.0</real_time_update_rate>
+    </physics>
+
+    <!-- Rectangular tramo que hace de pista sencilla -->
+    <model name="asphalt_track">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="road">
+        <collision name="road_collision">
+          <geometry>
+            <box>
+              <size>12 4 0.02</size>
+            </box>
+          </geometry>
+          <pose>0 0 0.01 0 0 0</pose>
+        </collision>
+        <visual name="road_visual">
+          <geometry>
+            <box>
+              <size>12 4 0.02</size>
+            </box>
+          </geometry>
+          <pose>0 0 0.01 0 0 0</pose>
+          <material>
+            <ambient>0.08 0.08 0.08 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+        <!-- Línea central de pista -->
+        <visual name="center_line">
+          <geometry>
+            <box>
+              <size>12 0.05 0.005</size>
+            </box>
+          </geometry>
+          <pose>0 0 0.012 0 0 0</pose>
+          <material>
+            <ambient>0.9 0.9 0.1 1</ambient>
+            <diffuse>1 1 0.2 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Indicador de direccion con forma de flecha -->
+    <model name="arrow_marker">
+      <static>true</static>
+      <pose>-4 0 0 0 0 0</pose>
+      <link name="arrow">
+        <!-- base -->
+        <collision name="stand_collision">
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.15</length>
+            </cylinder>
+          </geometry>
+          <pose>0 0 0.075 0 0 0</pose>
+        </collision>
+        <visual name="stand_visual">
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.15</length>
+            </cylinder>
+          </geometry>
+          <pose>0 0 0.075 0 0 0</pose>
+          <material>
+            <ambient>0.2 0.2 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.3 1</diffuse>
+          </material>
+        </visual>
+
+        <!-- flecha cuerpo -->
+        <visual name="arrow_shaft">
+          <geometry>
+            <box>
+              <size>0.8 0.08 0.05</size>
+            </box>
+          </geometry>
+          <pose>0.4 0 0.15 0 0 0</pose>
+          <material>
+            <ambient>0 0.45 0.8 1</ambient>
+            <diffuse>0.05 0.55 0.95 1</diffuse>
+          </material>
+        </visual>
+        <!-- cabeza de flecha aproximada con dos cajas -->
+        <visual name="arrow_head_left">
+          <geometry>
+            <box>
+              <size>0.2 0.06 0.05</size>
+            </box>
+          </geometry>
+          <pose>0.85 0.07 0.15 0 0 0.785398</pose>
+          <material>
+            <ambient>0 0.45 0.8 1</ambient>
+            <diffuse>0.05 0.55 0.95 1</diffuse>
+          </material>
+        </visual>
+        <visual name="arrow_head_right">
+          <geometry>
+            <box>
+              <size>0.2 0.06 0.05</size>
+            </box>
+          </geometry>
+          <pose>0.85 -0.07 0.15 0 0 -0.785398</pose>
+          <material>
+            <ambient>0 0.45 0.8 1</ambient>
+            <diffuse>0.05 0.55 0.95 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>2.0 -4.0 2.0 0.0 0.5 1.57</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+  </world>
+</sdf>
